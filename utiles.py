@@ -1,0 +1,57 @@
+import pygame
+import os
+
+base_path = os.path.dirname(__file__)
+
+"""
+    Carga las imagenes desde la ruta dende esta el proyecto y la retorna a la escala dada
+
+    Args:
+        route (string): Nombre de la imgen completo.
+        x (int): coordenada x de la imagen en el png
+        y (int): coordenada y de la imagen en el png
+        rw(int): ancho del recuadro que se tomara.
+        ry(int): alto del recuadro que se tomara.
+        w (int): Ancho.
+        h (int): Alto.
+
+    Returns:
+        Sprite
+"""
+def imagen_interface(route, x, y, rw, rh, w, h):
+	image_path = os.path.join(base_path,'assets//img//', route)
+	image_load = pygame.image.load(image_path).convert_alpha()
+	rect = pygame.Rect(x, y, rw, rh)
+	image = image_load.subsurface(rect)
+	image = pygame.transform.scale(image, (w, h))
+	return image
+
+
+def draw_background(background, w, h, img):
+    	for y in range(0, h, 20):
+            for x in range(0, w, 20):
+                background.blit(img, (x, y))
+
+
+
+"""
+	Dibuja una imagen por cada letra de la matriz dada.
+
+	Args:
+		screen (pygame.Surface): Superficie donde se dibujará la figura.
+		tiles: Las imagenes que se utilizara para cada tiles.
+		x : Coordenada eje x.
+		y : Coordenada eje y.
+		map_data: Matriz a dibujar.
+
+	return:
+		None
+"""
+def draw_matriz(screen, tiles, x, y, map_data):
+    	for i, row in enumerate(map_data):
+    		for j, col in enumerate(row):
+    			if col != "*":
+    				w, h = tiles[col].get_size()
+    				pos_x = x + j * w
+    				pos_y = y + i * w
+    				screen.blit(tiles[col], (pos_x, pos_y))
