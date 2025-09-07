@@ -15,7 +15,8 @@ CHUNK_SIZE = 16
 TILE_SIZE = 38
 
 background = pygame.Surface((constants.WORLD_WIDTH, constants.WORLD_HEIGHT))
-camera_x, camera_y = constants.WORLD_WIDTH // 2 - constants.SCREEN_WIDTH // 2, constants.WORLD_HEIGHT
+camera_x = constants.WORLD_WIDTH // 2 - constants.SCREEN_WIDTH // 2
+camera_y = constants.WORLD_HEIGHT - constants.SCREEN_HEIGHT
 
 grass = imagen_interface('mundo//tiles_world.png', 137, 326, TILE_SIZE, TILE_SIZE, 20, 20)
 small_stone = imagen_interface('mundo//tiles_world.png', 148, 445, 20, 20, 10, 15)
@@ -59,9 +60,12 @@ while running:
     
     # --- Dibujar ---
     draw_background(background, camera_x, end_camera_x, camera_y, end_camera_y, grass)
-    
+    # -- Dibujando los elementos de la foresta
     for matriz in all_forest:
-        draw_matriz(background, tiles, matriz[1], matriz[2], matriz[0])
+        
+        if (camera_x - constants.SCREEN_WIDTH < matriz[1] < end_camera_x + constants.SCREEN_WIDTH and 
+            camera_y - constants.SCREEN_HEIGHT < matriz[2] < end_camera_y + constants.SCREEN_HEIGHT) :
+            draw_matriz(background, tiles, matriz[1], matriz[2], matriz[0])
 
     screen.blit(background, (0, 0), ((camera_x), camera_y, constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
 

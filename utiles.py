@@ -26,8 +26,20 @@ def imagen_interface(route, x, y, rw, rh, w, h):
 	image = pygame.transform.scale(image, (w, h))
 	return image
 
+"""
+	dibuja la imagen dada en el background del chunk donde este la camara
 
-def draw_background(background, range1, w,range2, h, img):
+	Arg:
+	background: zona donde se dibujara la imagen.
+	range1: coordenada inicial de la x.
+	w: ancho que tendra la imagen.
+	range2: cordenada inicial de la y.
+	img: la imagen a dibujar. 
+
+	return:
+		None
+"""
+def draw_background(background, range1, w, range2, h, img):
     	for y in range(range2, h, 20):
             for x in range(range1, w, 20):
                 background.blit(img, (x, y))
