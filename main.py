@@ -2,6 +2,7 @@ import pygame
 import constants
 from map_1_data import all_forest
 from utiles import draw_matriz, imagen_interface, draw_background
+from mini_map import draw_mini_map
 
 # pygame setup
 pygame.init()
@@ -74,6 +75,8 @@ while running:
     # screen.blit(wood_img, rect2)
     # # Dibujar el borde del rectángulo (en rojo, 1 píxeles de grosor)
     # pygame.draw.rect(screen, (255, 0, 0), rect2, 1)
+
+    draw_mini_map(screen, camera_x, camera_y)
 
  	# Actualizar pantalla
     pygame.display.flip()
