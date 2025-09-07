@@ -4,10 +4,10 @@ import os
 base_path = os.path.dirname(__file__)
 
 """
-    Carga las imagenes desde la ruta dende esta el proyecto y la retorna a la escala dada
+    Carga las imagenes desde la ruta donde esta el proyecto y la retorna a la escala especificada
 
     Args:
-        route (string): Nombre de la imgen completo.
+        route (string): Nombre de la imagen completo.
         x (int): coordenada x de la imagen en el png
         y (int): coordenada y de la imagen en el png
         rw(int): ancho del recuadro que se tomara.
@@ -27,9 +27,9 @@ def imagen_interface(route, x, y, rw, rh, w, h):
 	return image
 
 
-def draw_background(background, w, h, img):
-    	for y in range(0, h, 20):
-            for x in range(0, w, 20):
+def draw_background(background, range1, w,range2, h, img):
+    	for y in range(range2, h, 20):
+            for x in range(range1, w, 20):
                 background.blit(img, (x, y))
 
 
