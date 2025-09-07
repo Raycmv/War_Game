@@ -76,7 +76,7 @@ while running:
     # # Dibujar el borde del rectángulo (en rojo, 1 píxeles de grosor)
     # pygame.draw.rect(screen, (255, 0, 0), rect2, 1)
 
-    draw_mini_map(screen, camera_x, camera_y)
+    draw_mini_map(screen, camera_x, camera_y, all_forest)
 
  	# Actualizar pantalla
     pygame.display.flip()
