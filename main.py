@@ -1,8 +1,8 @@
 import pygame
 import constants
-from map_1_data import all_forest
-from utiles import draw_matriz, imagen_interface, draw_background
-from mini_map import draw_mini_map
+from world_image import world_tiles, all_world
+from utiles import draw_matriz, draw_background, imagen_interface
+from mini_map import draw_mini_map, minimap_to_world
 
 # pygame setup
 pygame.init()
@@ -11,34 +11,35 @@ clock = pygame.time.Clock()
 
 pygame.display.set_caption("War")
 
+tiles = world_tiles()
+
 running = True
-CHUNK_SIZE = 16
-TILE_SIZE = 38
 
 background = pygame.Surface((constants.WORLD_WIDTH, constants.WORLD_HEIGHT))
 camera_x = constants.WORLD_WIDTH // 2 - constants.SCREEN_WIDTH // 2
 camera_y = constants.WORLD_HEIGHT - constants.SCREEN_HEIGHT
-
-grass = imagen_interface('mundo//tiles_world.png', 137, 326, TILE_SIZE, TILE_SIZE, 20, 20)
-small_stone = imagen_interface('mundo//tiles_world.png', 148, 445, 20, 20, 10, 15)
-tree1_img = imagen_interface('mundo//tiles_world.png', 80, 70, 140, 250, 120, 140)
-tree2_img = imagen_interface('mundo//tiles_world.png', 360, 70, 140, 250, 120, 180)
-tree3_img = imagen_interface('mundo//tiles_world.png', 550, 85, 150, 280, 120, 180)
-wood_img = imagen_interface('mundo//tiles_world.png', 158, 796, 10, 40, 10, 70)
-
-tiles = {
-    "S": small_stone,
-    "O": tree1_img,
-    "P": tree2_img,
-    "Q": tree3_img,
-    "M": wood_img
-}
+grass = imagen_interface('mundo//tiles_world.png', 62, 1518, 200, 220, constants.TILE_SIZE, constants.TILE_SIZE)
 
 while running:
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mx, my = event.pos
+            # Ver si el click está dentro del minimapa
+            if constants.MINIMAP_X <= mx <= constants.MINIMAP_X + constants.MINIMAP_X_SIZE and constants.MINIMAP_Y <= my <= constants.MINIMAP_Y + constants.MINIMAP_Y_SIZE:
+                # Convertir a coordenadas del mundo
+                wx, wy = minimap_to_world(mx, my)
+
+                # Centrar la cámara en ese punto
+                camera_x = wx - constants.SCREEN_WIDTH // 2
+                camera_y = wy - constants.SCREEN_HEIGHT // 2
+
+                # Limitar cámara para que no se salga del mundo
+                camera_x = max(0, min(camera_x, constants.WORLD_WIDTH - constants.SCREEN_WIDTH))
+                camera_y = max(0, min(camera_y, constants.WORLD_HEIGHT - constants.SCREEN_HEIGHT))
 
     # --- Cámara con el mouse ---
     mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -61,22 +62,17 @@ while running:
     
     # --- Dibujar ---
     draw_background(background, camera_x, end_camera_x, camera_y, end_camera_y, grass)
+
     # -- Dibujando los elementos de la foresta
-    for matriz in all_forest:
-        
-        if (camera_x - constants.SCREEN_WIDTH < matriz[1] < end_camera_x + constants.SCREEN_WIDTH and 
-            camera_y - constants.SCREEN_HEIGHT < matriz[2] < end_camera_y + constants.SCREEN_HEIGHT) :
-            draw_matriz(background, tiles, matriz[1], matriz[2], matriz[0])
+    for matriz_list in all_world:
+         for matriz in matriz_list:
+            if (camera_x - constants.SCREEN_WIDTH < matriz[1] < end_camera_x + constants.SCREEN_WIDTH and 
+                camera_y - constants.SCREEN_HEIGHT < matriz[2] < end_camera_y + constants.SCREEN_HEIGHT) :
+                draw_matriz(background, tiles, matriz[1], matriz[2], matriz[0])
 
     screen.blit(background, (0, 0), ((camera_x), camera_y, constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
 
-    # rect2 = pygame.Rect(100, 100, 80, 120)
-    # # Dibujar la imagen
-    # screen.blit(wood_img, rect2)
-    # # Dibujar el borde del rectángulo (en rojo, 1 píxeles de grosor)
-    # pygame.draw.rect(screen, (255, 0, 0), rect2, 1)
-
-    draw_mini_map(screen, camera_x, camera_y, all_forest)
+    draw_mini_map(screen, camera_x, camera_y, all_world)
 
  	# Actualizar pantalla
     pygame.display.flip()

@@ -1,47 +1,55 @@
 oaks_forest = [
-    "O*O*PO**OQ",
-    "P*OQ**OQ*O",
-    "*OO*O*OPO"
+    "*P*SO*R*O*S",
+    "O*O*P*P*O*Q",
+    "P*OSQ*SQ*O*",
+    "O*Q*SPSO*O*",
+    "*O*O*SO*P*O"
 ]
 oaks_forest2 = [
-    "O**OQO**OO",
-    "O*Q*O*PO*O",
-    "*OP*O*OQ*"
+    "*R*PS**O*S*",
+    "O**O*O*SO*O",
+    "O*Q*S*P*O*O*",
+    "P*O*QS*Q*O*",
+    "*O*P*SO*P*Q"
 ]
 oaks_forest3 = [
-    "Q**OPO**OO",
-    "P*Q*Q*PO*O",
-    "*OP*Q*OQP"
+    "*SO*SP*R*",
+    "Q*P**Q**O",
+    "*PQ*PO*O*",
+    "P*O*Q*QSO*",
+    "O*P*S*Q*P"
 ]
-stone_group = [
-    "***SSS***",
-    "*S*SS*SS*",
-    "**SSS*S**",
-    "*SS*SSSS*",
-    "***SSS***"
+oaks_forest4 = [
+    "S*OS*P*R*",
+    "Q*P*SQ*O*",
+    "*PR*PO*SO",
+    "P*O*QSQ*O",
+    "Q*P*SQ*O*",
+    "*PQ*PR*SO",
+    "O*P*R*Q*P"
+]
+rock_group = [
+    "**ABAAB**",
+    "BBABAAB**",
+    "ABAABA*B*A"
 ]
 
 all_forest = [
-    [oaks_forest, 500, 60, "trees"],
-    [oaks_forest2, 300, 400, "trees"],
-    [stone_group, 900, 600, "stones"],
-    [oaks_forest, 1500, 3000, "trees"],
-    [oaks_forest2, 1300, 1000, "trees"],
-    [oaks_forest3, 1500, 1200, "trees"],
-    [oaks_forest, 700, 1500, "trees"],
-    [oaks_forest2, 1200, 2200, "trees"],
-    [oaks_forest3, 1000, 3000, "trees"],
-    [oaks_forest, 500, 4500, "trees"],
-    [oaks_forest2, 700, 5000, "trees"],
-    [oaks_forest3, 1400, 1200, "trees"],
-    [oaks_forest, 500, 5500, "trees"],
-    [oaks_forest2, 1700, 5500, "trees"],
-    [oaks_forest3, 600, 4000, "trees"],
-    ["O", 150, 200, "tree"],
-    ["O", 250, 450, "tree"],
-    ["P", 250, 1250, "tree"],
-    ["O", 250, 3050, "tree"],
-    ["Q", 50, 450, "tree"],
-    ["O", 2550, 5000, "tree"],
-    [["MMMMMM"], 340, 300, "woods"],
+    [oaks_forest, 3700, 200, "trees"],
+    [oaks_forest2, 3000, 1200, "trees"],
+    [oaks_forest4, 2700, 2000, "trees"],
+    [oaks_forest, 1500, 4000, "trees"],
+    [oaks_forest2, 2500, 5000, "trees"],
+    [oaks_forest4, 1200, 6000, "trees"],
+    [oaks_forest3, 1500, 7500, "trees"],
+    [oaks_forest4, 3500, 8500, "trees"],
+    [oaks_forest, 700, 10300, "trees"],
+    [oaks_forest2, 1200, 11000, "trees"],
+    [oaks_forest3, 2700, 12000, "trees"],
+    [oaks_forest, 500, 13000, "trees"],
+    [oaks_forest2, 2900, 14000, "trees"],
+    [oaks_forest3, 1400, 15000, "trees"],
+    [oaks_forest, 500, 16000, "trees"],
+    [oaks_forest2, 1700, 16800, "trees"],
+    [oaks_forest3, 600, 17000, "trees"],
 ]
