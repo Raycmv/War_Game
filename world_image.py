@@ -1,6 +1,6 @@
 import pygame
 from map_1_data import all_forest
-from utiles import draw_matriz, imagen_interface, draw_background, random_sprites
+from utiles import *
 
 def world_tiles ():
     tree1_img = imagen_interface('mundo//tiles_world.png', 50, 50, 280, 280, 130, 160)
@@ -28,7 +28,6 @@ def world_tiles ():
 
 
 all_world = [
-    all_forest,
     random_sprites("A", 200, 20, 10, "rock"), 
     random_sprites("B", 200, 20, 10, "rock"), 
     random_sprites("C", 20, 20, 10, "rock"), 
@@ -37,5 +36,6 @@ all_world = [
     random_sprites("P", 10, 120, 180, "tree"),
     random_sprites("Q", 10, 130, 160, "tree"),
     random_sprites("R", 10, 130, 200, "tree"),
-    random_sprites("S", 10, 130, 200, "tree")
+    random_sprites("S", 10, 130, 200, "tree"),
+    all_forest
 ]
