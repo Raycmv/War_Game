@@ -28,28 +28,16 @@ oaks_forest4 = [
     "*PQ*PR*SO",
     "O*P*R*Q*P"
 ]
-rock_group = [
-    "**ABAAB**",
-    "BBABAAB**",
-    "ABAABA*B*A"
-]
 
 all_forest = [
-    [oaks_forest, 3700, 200, "trees"],
-    [oaks_forest2, 3000, 1200, "trees"],
-    [oaks_forest4, 2700, 2000, "trees"],
+    [oaks_forest, 3700, 2700, "trees"],
+    [oaks_forest4, 2700, 2500, "trees"],
     [oaks_forest, 1500, 4000, "trees"],
-    [oaks_forest2, 2500, 5000, "trees"],
     [oaks_forest4, 1200, 6000, "trees"],
-    [oaks_forest3, 1500, 7500, "trees"],
-    [oaks_forest4, 3500, 8500, "trees"],
-    [oaks_forest, 700, 10300, "trees"],
-    [oaks_forest2, 1200, 11000, "trees"],
-    [oaks_forest3, 2700, 12000, "trees"],
-    [oaks_forest, 500, 13000, "trees"],
-    [oaks_forest2, 2900, 14000, "trees"],
-    [oaks_forest3, 1400, 15000, "trees"],
-    [oaks_forest, 500, 16000, "trees"],
-    [oaks_forest2, 1700, 16800, "trees"],
-    [oaks_forest3, 600, 17000, "trees"],
+    [oaks_forest3, 1000, 7500, "trees"],
+    [oaks_forest, 1000, 11000, "trees"],
+    [oaks_forest, 1500, 13000, "trees"],
+    [oaks_forest2, 2900, 13500, "trees"],
+    [oaks_forest, 1500, 16000, "trees"],
+    [oaks_forest3, 1300, 17000, "trees"],
 ]

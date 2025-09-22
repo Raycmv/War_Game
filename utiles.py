@@ -47,10 +47,11 @@ def imagen_interface(route, x, y, rw, rh, w, h):
 	return:
 		None
 """
-def draw_background(background, range1, w, range2, h, img):
-    	for y in range(range2, h, 150):
-            for x in range(range1, w, 150):
-                background.blit(img, (x, y))
+# def draw_background(background, range1, w, range2, h, img):
+#     for y in range(range2, h, 150):
+#     	for x in range(range1, w, 150):
+#     		if (LAND_X <= x <= LAND_WIDTH  and LAND_Y<= y <= LAND_HEIGHT):
+#     			background.blit(img, (x, y))
 
 
 
@@ -67,21 +68,20 @@ def draw_background(background, range1, w, range2, h, img):
 	return:
 		None
 """
-def draw_matriz(screen, tiles, map_data, x, y, name):
+def draw_matriz(background, tiles, map_data, x, y, name):
 	for i, row in enumerate(map_data):
 		for j, col in enumerate(row):
 			if col != "*":
-				w, h = tiles[col].get_size()
+				w, h = tiles[col][5], tiles[col][6]
 				pos_x = x + j * w
-				pos_y = y + i * w
+				pos_y = y + i * h
 				zone = (int(pos_x / ZONE) + 1) * (int(pos_y / ZONE) + 1)
-				# if (len(ALL_SPRITES[zone])):
-				# 	print(zone, len(ALL_SPRITES[zone]))
-				obj = check_collision(zone, pos_x, pos_y, w, h)
-				if (obj[0]):
-					screen.blit(tiles[col], (pos_x, pos_y))
-					if (obj[1] and (name == "tree" or name == "trees")):
-						ALL_SPRITES[zone].append(Sprite(pos_x, pos_y, zone, "tree", w, h, str(pos_x) + str(pos_y) + str(zone)))
+				if (check_zone(zone, pos_x, pos_y) == False):
+					img = imagen_interface(tiles[col][0], tiles[col][1], tiles[col][2], tiles[col][3], tiles[col][4], w, h)
+					background.blit(img, (pos_x, pos_y))
+					
+# new_sprite = Sprite_game(tiles[col][0], pos_x, pos_y, tiles[col][1], tiles[col][2], tiles[col][3], tiles[col][4], zone, "tree", w, h, str(pos_x) + str(pos_y) + str(zone))
+# ALL_SPRITES[zone].append(new_sprite)
 
 """
 	Genera siempre las mismas posiciones para los sprites.
@@ -94,13 +94,14 @@ def draw_matriz(screen, tiles, map_data, x, y, name):
 	return:
 		positions (list)
 """
-def generate_positions(cant, w, h):
-    positions = []
-    for _ in range(cant):
-        x = random.randint(200, (WORLD_WIDTH - w) - 200)
-        y = random.randint(20, WORLD_HEIGHT - h)
-        positions.append((x, y))
-    return positions
+def generate_positions(cant, mask):
+	positions = []
+	for _ in range(cant):
+		x = random.randint(500, LAND_WIDTH - 500)
+		y = random.randint(500, LAND_HEIGHT - 500)
+		if (mask.get_at((x, y)) == 0):
+			positions.append((x, y))
+	return positions
 
 
 """
@@ -113,14 +114,12 @@ def generate_positions(cant, w, h):
 	return:
 		positions (list)
 """
-def random_sprites(sprite, cant, w, h, name):
-    positions = generate_positions(cant, w, h)
+def random_sprites(sprite, cant, name, mask):
+    positions = generate_positions(cant, mask)
     sprites = []
     for pos in positions:
         sprites.append([sprite, pos[0], pos[1], name])
     return sprites
-
-
 
 """
 	Reviza las coordenadas de los elementos de la zona dada para ver si colaicionan.
@@ -136,16 +135,20 @@ def random_sprites(sprite, cant, w, h, name):
 		data (list): False si hay coalicion y False si ya existe. 
 """
 
-def check_collision(zone, x,  y, w, h):
-	data = [True, True]
+def check_zone(zone, x,  y):
 	for sprite in ALL_SPRITES[zone]:
-		current = sprite.sprite_status()
-		if (current[6] == (str(x) + str(y) + str(zone))):
-			data[1] = False
-			break
-		else:
-			if ((x > current[0] and x < current[0] + current[4]) and ((y > current[1] and y < current[1] + current[5]) or (y < current[1] and y + h > current[1] )) ):
-				data[0] = False
-			elif ((y > current[1] and y < current[1] + current[5]) and ((x < current[0] and x + w > current[0] ) or (x > current[0] and x < current[0] + current[4]))):
-				data[0] = False
-	return data
+		if (sprite.id == (str(x) + str(y) + str(zone))):
+			return True
+	return False
+
+"""
+	Reviza las coordenadas de los elementos de la zona dada para ver si colaicionan. 
+"""
+
+def check_masks_collision(self, other_sprite):
+        offset = (other_sprite.rect.x - self.rect.x, other_sprite.rect.y - self.rect.y)
+        return self.mask.overlap(other_sprite.mask, offset) is not None
+
+def check_mask_area(area, point):
+	print(area.get_at(point) == 1)
+	return area.get_at(point) == 1
