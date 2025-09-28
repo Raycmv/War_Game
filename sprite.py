@@ -1,5 +1,6 @@
 import pygame
 import os
+from utiles import *
 
 
 base_path = os.path.dirname(__file__)
@@ -9,8 +10,8 @@ class Sprite_game(pygame.sprite.Sprite):
         super().__init__()
         self.image = self.imagen_interface(path, imgx, imgy, endx, endy, w, h)
         self.mask = pygame.mask.from_surface(self.image)
-        self.x = x
-        self.y = y
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
         self.zone = z
         self.name = name
         self.w = w

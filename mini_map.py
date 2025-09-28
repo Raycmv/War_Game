@@ -4,10 +4,10 @@ from utiles import *
 
 
 # fondo del minimapa
-def draw_mini_map(screen, camera_x, camera_y, all_world):
+def draw_mini_map(screen, camera_x, camera_y, all_world, all_cities):
 
 	miniMap = pygame.Rect(MINIMAP_X, MINIMAP_Y, MINIMAP_X_SIZE, MINIMAP_Y_SIZE)
-	mini_world_img = imagen_interface('mundo//mini_world.jpg', 0, 0, 335, 450, MINIMAP_X_SIZE, MINIMAP_Y_SIZE)
+	mini_world_img = imagen_interface('mundo//mini_world.jpg', 0, 0, 506, 675, MINIMAP_X_SIZE, MINIMAP_Y_SIZE)
 	
 	screen.blit(mini_world_img, (MINIMAP_X, MINIMAP_Y))
 	pygame.draw.rect(screen, (250, 0, 0), miniMap, 1)
@@ -39,13 +39,18 @@ def draw_mini_map(screen, camera_x, camera_y, all_world):
 		    			t = 5
 		    		else:
 		    			t = 0
-		    		pygame.draw.circle(screen, (0, 255, 0), (SCREEN_WIDTH - MINIMAP_X_SIZE + mx + x * 5, 
-		    	SCREEN_HEIGHT - MINIMAP_Y_SIZE + my + t), 2)
+		    		pygame.draw.circle(screen, (0, 255, 0), (MINIMAP_X + mx + x * 5, MINIMAP_Y + my + t), 1)
 		    elif (matriz[3] == "tree") :
-		    	pygame.draw.circle(screen, (0, 255, 0), (SCREEN_WIDTH - MINIMAP_X_SIZE + mx, 
-		    	SCREEN_HEIGHT - MINIMAP_Y_SIZE + my), 2)
+		    	pygame.draw.circle(screen, (0, 255, 0), (MINIMAP_X + mx, MINIMAP_Y + my), 1)
 
 	pygame.draw.rect(screen, (255, 0, 0), cam_rect, 2)  # borde rojo
+
+	for city in all_cities:
+		x, y = city.rect.topleft
+		mx = int(x * SCALE_X)
+		my = int(y * SCALE_Y)
+		city_rect = pygame.Rect(MINIMAP_X + mx, MINIMAP_Y + my, 8, 7)
+		pygame.draw.rect(screen, ("#df9850"), city_rect)
 
 """
 	Convierte coordenadas del minimapa -> mundo

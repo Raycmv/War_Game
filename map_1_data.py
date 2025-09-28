@@ -30,14 +30,14 @@ oaks_forest4 = [
 ]
 
 all_forest = [
-    [oaks_forest, 3700, 2700, "trees"],
-    [oaks_forest4, 2700, 2500, "trees"],
+    [oaks_forest, 2700, 2500, "trees"],
+    [oaks_forest4, 7700, 3500, "trees"],
     [oaks_forest, 1500, 4000, "trees"],
     [oaks_forest4, 1200, 6000, "trees"],
-    [oaks_forest3, 1000, 7500, "trees"],
+    [oaks_forest3, 6000, 7500, "trees"],
     [oaks_forest, 1000, 11000, "trees"],
-    [oaks_forest, 1500, 13000, "trees"],
+    [oaks_forest,6500, 13000, "trees"],
     [oaks_forest2, 2900, 13500, "trees"],
-    [oaks_forest, 1500, 16000, "trees"],
+    [oaks_forest, 6500, 16000, "trees"],
     [oaks_forest3, 1300, 17000, "trees"],
 ]

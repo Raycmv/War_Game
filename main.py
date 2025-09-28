@@ -3,6 +3,7 @@ from constants import *
 from world_image import *
 from utiles import *
 from mini_map import *
+from area_surface import *
 
 # pygame setup
 pygame.init()
@@ -12,28 +13,24 @@ clock = pygame.time.Clock()
 pygame.display.set_caption("War")
 
 background = pygame.Surface((WORLD_WIDTH, WORLD_HEIGHT))
-camera_x = 3750 
-camera_y = 17510
+camera_x = 6400 
+camera_y = 17800
 
-sea_map_img = imagen_interface('mundo//sea_map.png', 0, 0, 3730, 5000, WORLD_WIDTH, WORLD_HEIGHT)
-sea_map_mask = pygame.mask.from_surface(sea_map_img)
+areas = world_areas()
+background.blit(areas["full_map"].image, areas["full_map"].rect)
 
-land_map_img2 = imagen_interface('mundo//land_map2.png', 0, 0, 3730, 5000, WORLD_WIDTH, WORLD_HEIGHT)
-
-land_map_img = imagen_interface('mundo//land_map.png', 225, 300, 3315, 4560, LAND_WIDTH, LAND_HEIGHT)
-land_map_mask = pygame.mask.from_surface(land_map_img)
-
-
-background.blit(sea_map_img, (0, 0))
-background.blit(land_map_img, (380, 1150))
-background.blit(land_map_img2, (0, 0))
+cities = world_cities()
 
 tiles = world_tiles()
 
 for i in range (0, CANT_ZONE + 1):
         ALL_SPRITES.append([])
 
-all_world = world_random(sea_map_mask)
+city = Area_surface('mundo//tiles_world.png', 7000, 18000, 1220, 975, 827, 789, CITY_WIDTH, CITY_HEIGHT, "city")
+ALL_CITIES.append(city)
+background.blit(city.image, city.rect)
+
+all_world = world_random(areas["land_map"].mask)
 
 loading = True
 num_circles = len(all_world)
@@ -141,7 +138,7 @@ while running:
     pygame.draw.rect(screen, BLUE, minimap_icon_rect.inflate(-10, -10))  # ícono
 
     if (show_minimap):
-        draw_mini_map(screen, camera_x, camera_y, all_world)
+        draw_mini_map(screen, camera_x, camera_y, all_world, ALL_CITIES)
 
  	# Actualizar pantalla
     pygame.display.flip()

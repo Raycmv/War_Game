@@ -27,8 +27,8 @@ base_path = os.path.dirname(__file__)
 def imagen_interface(route, x, y, rw, rh, w, h):
 	image_path = os.path.join(base_path,'assets//img//', route)
 	image_load = pygame.image.load(image_path).convert_alpha()
-	rect = pygame.Rect(x, y, rw, rh)
-	image = image_load.subsurface(rect)
+	frame_rect = pygame.Rect(x, y, rw, rh)
+	image = image_load.subsurface(frame_rect)
 	image = pygame.transform.scale(image, (w, h))
 	return image
 
@@ -96,10 +96,11 @@ def draw_matriz(background, tiles, map_data, x, y, name):
 """
 def generate_positions(cant, mask):
 	positions = []
+
 	for _ in range(cant):
-		x = random.randint(500, LAND_WIDTH - 500)
-		y = random.randint(500, LAND_HEIGHT - 500)
-		if (mask.get_at((x, y)) == 0):
+		x = random.randint(LAND_X + 200, LAND_WIDTH - 100)
+		y = random.randint(LAND_Y + 200, LAND_HEIGHT - 100)
+		if (mask.get_at((x - LAND_X, y - LAND_Y)) == 1):
 			positions.append((x, y))
 	return positions
 
@@ -150,5 +151,5 @@ def check_masks_collision(self, other_sprite):
         return self.mask.overlap(other_sprite.mask, offset) is not None
 
 def check_mask_area(area, point):
-	print(area.get_at(point) == 1)
+	#print(area.get_at(point) == 1)
 	return area.get_at(point) == 1
