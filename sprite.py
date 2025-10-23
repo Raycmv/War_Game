@@ -1,26 +1,30 @@
 import pygame
 import os
 from utiles import *
+from constants import *
 
 
 base_path = os.path.dirname(__file__)
 
 class Sprite_game(pygame.sprite.Sprite):
-    def __init__(self, path, x, y, imgx, imgy, endx, endy, z, name, w, h, ident):
+    _id_counter = 1000
+
+    def __init__(self, path, x, y, imgx, imgy, endx, endy, name, w, h, type):
         super().__init__()
         self.image = self.imagen_interface(path, imgx, imgy, endx, endy, w, h)
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
-        self.zone = z
+        self.zone = [int(x / ZONE), int(y / ZONE)]
         self.name = name
         self.w = w
         self.h = h
-        self.id = ident
+        self.type = type
+        self.id = name +"_"+ str(Sprite_game._id_counter)
 
+        Sprite_game._id_counter += 1
     def sprite_status(self):
-        current = [self.x, self.y, self.zone, self.name, self.w, self.h, self.id]
-        return current
+        return [self.x, self.y, self.zone, self.type, self.name, self.id]
 
     def imagen_interface(self, route, x, y, rw, rh, w, h):
         image_path = os.path.join(base_path,'assets//img//', route)

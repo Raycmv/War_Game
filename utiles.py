@@ -2,7 +2,7 @@ import pygame
 import random
 import os
 from constants import *
-from sprite import *
+from tree import *
 
 random.seed(42)
 
@@ -68,20 +68,15 @@ def imagen_interface(route, x, y, rw, rh, w, h):
 	return:
 		None
 """
-def draw_matriz(background, tiles, map_data, x, y, name):
+def draw_matriz(tiles, map_data, x, y, name, type):
 	for i, row in enumerate(map_data):
 		for j, col in enumerate(row):
 			if col != "*":
 				w, h = tiles[col][5], tiles[col][6]
 				pos_x = x + j * w
 				pos_y = y + i * h
-				zone = (int(pos_x / ZONE) + 1) * (int(pos_y / ZONE) + 1)
-				if (check_zone(zone, pos_x, pos_y) == False):
-					img = imagen_interface(tiles[col][0], tiles[col][1], tiles[col][2], tiles[col][3], tiles[col][4], w, h)
-					background.blit(img, (pos_x, pos_y))
-					
-# new_sprite = Sprite_game(tiles[col][0], pos_x, pos_y, tiles[col][1], tiles[col][2], tiles[col][3], tiles[col][4], zone, "tree", w, h, str(pos_x) + str(pos_y) + str(zone))
-# ALL_SPRITES[zone].append(new_sprite)
+				img = Tree(tiles[col][0], pos_x, pos_y, tiles[col][1], tiles[col][2], tiles[col][3], tiles[col][4], name,  w, h, type)
+
 
 """
 	Genera siempre las mismas posiciones para los sprites.
@@ -94,15 +89,15 @@ def draw_matriz(background, tiles, map_data, x, y, name):
 	return:
 		positions (list)
 """
-def generate_positions(cant, mask):
-	positions = []
+# def generate_positions(cant, mask):
+# 	positions = []
 
-	for _ in range(cant):
-		x = random.randint(LAND_X + 200, LAND_WIDTH - 100)
-		y = random.randint(LAND_Y + 200, LAND_HEIGHT - 100)
-		if (mask.get_at((x - LAND_X, y - LAND_Y)) == 1):
-			positions.append((x, y))
-	return positions
+# 	for _ in range(cant):
+# 		x = random.randint(LAND_X + 200, LAND_WIDTH - 200)
+# 		y = random.randint(LAND_Y + 200, LAND_HEIGHT - 200)
+# 		if (mask.get_at((x + 50 - LAND_X, y + 50 - LAND_Y)) == 1):
+# 			positions.append((x, y))
+# 	return positions
 
 
 """
@@ -115,12 +110,12 @@ def generate_positions(cant, mask):
 	return:
 		positions (list)
 """
-def random_sprites(sprite, cant, name, mask):
-    positions = generate_positions(cant, mask)
-    sprites = []
-    for pos in positions:
-        sprites.append([sprite, pos[0], pos[1], name])
-    return sprites
+# def random_sprites(sprite, cant, name, mask):
+#     positions = generate_positions(cant, mask)
+#     sprites = []
+#     for pos in positions:
+#         sprites.append([sprite, pos[0], pos[1], name])
+#     return sprites
 
 """
 	Reviza las coordenadas de los elementos de la zona dada para ver si colaicionan.
@@ -137,8 +132,8 @@ def random_sprites(sprite, cant, name, mask):
 """
 
 def check_zone(zone, x,  y):
-	for sprite in ALL_SPRITES[zone]:
-		if (sprite.id == (str(x) + str(y) + str(zone))):
+	for sprite in ALL_SPRITES[zone[1]][zone[0]]:
+		if check_mask_area(sprite.mask, [x, y]):
 			return True
 	return False
 
@@ -151,5 +146,6 @@ def check_masks_collision(self, other_sprite):
         return self.mask.overlap(other_sprite.mask, offset) is not None
 
 def check_mask_area(area, point):
-	#print(area.get_at(point) == 1)
-	return area.get_at(point) == 1
+	if 0 <= point[0] < area.get_size()[0] and 0 <= point[1] < area.get_size()[1]:
+		return area.get_at(point) == 1
+	return False
